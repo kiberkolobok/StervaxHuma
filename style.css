@@ -1,0 +1,771 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+}
+
+.container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+}
+
+/* Адаптивный канвас для звезд */
+canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100% !important;
+    display: block;
+    z-index: 1;
+}
+
+/* Верхняя панель */
+.top-section {
+    position: absolute;
+    top: 28%;
+    left: 5%;
+    right: 5%;
+    transform: translateY(-50%);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    z-index: 2;
+    transition: all 0.5s ease-in-out;
+}
+
+/* Стили главной 3D карточки */
+.parent {
+    width: 42vw;
+    height: 35vh;
+    min-width: 380px;
+    min-height: 280px;
+    padding: 20px;
+    perspective: 1000px;
+}
+
+.card-hero {
+    width: 100%;
+    height: 100%;
+    border-radius: 30px;
+    border: 2px solid rgba(7, 185, 255, 0.4);
+    transform-style: preserve-3d;
+    background: linear-gradient(135deg, rgba(27, 39, 53, 0.9) 0%, rgba(10, 14, 23, 0.95) 100%);
+    transition: all 0.5s ease-in-out;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-hero:hover {
+    border-color: rgb(7, 185, 255);
+    box-shadow: 0 0 25px rgba(7, 185, 255, 0.25);
+    transform: rotate3d(0.5, 1, 0, 20deg);
+}
+
+.content-box {
+    background: rgba(13, 22, 38, 0.75);
+    width: 100%;
+    height: 100%;
+    border-radius: 28px;
+    transition: all 0.5s ease-in-out;
+    padding: 12% 12%;
+    box-sizing: border-box;
+    transform-style: preserve-3d;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.content-box .card-title {
+    display: inline-block;
+    color: #ffffff;
+    font-size: 34px;
+    font-weight: 900;
+    text-shadow: 0 0 10px rgba(7, 185, 255, 0.5);
+    transition: all 0.5s ease-in-out;
+    transform: translate3d(0px, 0px, 50px);
+}
+
+.content-box .card-content {
+    margin-top: 15px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #b0c4de;
+    line-height: 1.4;
+    transition: all 0.5s ease-in-out;
+    transform: translate3d(0px, 0px, 30px);
+}
+
+/* --- ПРАВАЯ ПАНЕЛЬ --- */
+.right-panel {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    width: 42vw;
+    min-width: 380px;
+    height: 330px;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+/* --- КАРТОЧКА ПРАЙСА --- */
+.price-card {
+    width: 50% !important;
+    height: 100% !important;
+    background-image: linear-gradient(163deg, rgba(0, 183, 255, 0.75) 0%, rgba(255, 48, 255, 0.75) 100%);
+    border-radius: 20px;
+    transition: all .3s;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+}
+
+.price-card .card2 {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(7, 24, 46, 0.75);
+    backdrop-filter: blur(10px);
+    border-radius: 18px;
+    transition: all .2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+.price-card .card2:hover {
+    transform: scale(0.98);
+}
+
+.price-card:hover {
+    box-shadow: 0px 0px 30px 1px rgba(7, 185, 255, 0.4);
+}
+
+.price-content-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.price-default {
+    color: white;
+    font-size: 2.4em;
+    font-weight: bold;
+    text-shadow: 0 0 10px rgba(7, 185, 255, 0.5);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    opacity: 1;
+    position: absolute;
+}
+
+.price-hover {
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(0.95);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    color: #b0c4de;
+    position: absolute;
+    width: 85%;
+}
+
+.price-hover h3 {
+    color: #ffffff;
+    font-size: 1.5em;
+    margin: 0 0 10px 0;
+    text-shadow: 0 0 10px rgba(7, 185, 255, 0.5);
+}
+
+.price-hover p {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.price-card:hover .price-default {
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(1.05);
+}
+
+.price-card:hover .price-hover {
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1);
+}
+
+/* Правая колонка */
+.right-column {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-sizing: border-box;
+}
+
+/* --- ИКОНКИ СОЦСЕТЕЙ (4 в ряд) --- */
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.example-2 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    gap: 6px;
+}
+
+.icon-content {
+    position: relative;
+    flex: 1;
+    max-width: 23%;
+}
+
+.icon-content .tooltip {
+    position: absolute;
+    bottom: -38px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #fff;
+    padding: 4px 8px;
+    border-radius: 10px;
+    opacity: 0;
+    visibility: hidden;
+    font-size: 10px;
+    font-family: sans-serif;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    z-index: 10;
+}
+
+.icon-content:hover .tooltip {
+    opacity: 1;
+    visibility: visible;
+    bottom: -42px;
+}
+
+.icon-content a {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 18%;
+    color: #fff;
+    text-decoration: none;
+    background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.12),
+        rgba(255, 255, 255, 0.03)
+    );
+    backdrop-filter: blur(14px) saturate(180%);
+    transition: all 0.35s ease-in-out;
+    box-shadow:
+        inset 0 1px 2px rgba(255, 255, 255, 0.3),
+        inset 0 -2px 6px rgba(0, 0, 0, 0.25),
+        0 6px 16px rgba(0, 0, 0, 0.3);
+}
+
+.icon-content[data-social="discord"] a { border: 1px solid rgba(114, 137, 218, 0.6); }
+.icon-content[data-social="twitter"] a { border: 1px solid rgba(255, 255, 255, 0.5); }
+.icon-content[data-social="deviantart"] a { border: 1px solid rgba(5, 204, 148, 0.6); }
+.icon-content[data-social="telegram"] a { border: 1px solid rgba(0, 136, 204, 0.6); }
+
+.icon-content a::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        120deg,
+        rgba(255, 255, 255, 0) 30%,
+        rgba(255, 255, 255, 0.3) 50%,
+        rgba(255, 255, 255, 0) 70%
+    );
+    transform: rotate(25deg) translateX(-100%);
+    transition: transform 0.8s ease;
+    z-index: 0;
+}
+
+.icon-content a:hover::before {
+    transform: rotate(25deg) translateX(100%);
+}
+
+.icon-content a svg {
+    position: relative;
+    z-index: 1;
+    width: 42%;
+    height: 42%;
+}
+
+.icon-content a:hover {
+    color: white;
+    box-shadow: 0 0 20px rgba(7, 185, 255, 0.4);
+}
+
+.icon-content a .filled {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    transition: all 0.3s ease-in-out;
+    border-radius: 18%;
+}
+
+@keyframes premiumGradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.icon-content[data-social="discord"] .filled,
+.icon-content[data-social="discord"] ~ .tooltip {
+    background: linear-gradient(135deg, #1e2548, #36448c, #5865F2, #181c38);
+    background-size: 400% 400%;
+    animation: premiumGradient 6s ease infinite;
+    border: 1px solid rgba(88, 101, 242, 0.6);
+}
+
+.icon-content[data-social="twitter"] .filled,
+.icon-content[data-social="twitter"] ~ .tooltip {
+    background: linear-gradient(135deg, #222222, #444444, #111111, #000000);
+    background-size: 400% 400%;
+    animation: premiumGradient 6s ease infinite;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+/* Фон DeviantArt (Зеленый без градиента) */
+.icon-content[data-social="deviantart"] .filled,
+.icon-content[data-social="deviantart"] ~ .tooltip {
+    background: #05cc94;
+    border: 1px solid rgba(5, 204, 148, 0.6);
+}
+
+.icon-content[data-social="telegram"] .filled,
+.icon-content[data-social="telegram"] ~ .tooltip {
+    background: linear-gradient(135deg, #0a1f2d, #0f4a66, #0088cc, #0a2e44);
+    background-size: 400% 400%;
+    animation: premiumGradient 6s ease infinite;
+    border: 1px solid rgba(0, 136, 204, 0.6);
+}
+
+/* --- КНОПКА «ЗАКАЗАТЬ АРТ» --- */
+.button {
+    line-height: 1;
+    text-decoration: none;
+    display: inline-flex;
+    border: none;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    background-color: var(--clr);
+    color: #fff;
+    border-radius: 10rem;
+    font-weight: 600;
+    padding: 0.9rem 1.5rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: background-color 0.3s;
+    width: 100%;
+    box-sizing: border-box;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+}
+
+.button__icon-wrapper {
+    flex-shrink: 0;
+    width: 25px;
+    height: 25px;
+    position: relative;
+    color: var(--clr);
+    background-color: #fff;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+}
+
+.button:hover {
+    background-color: #000;
+}
+
+.button:hover .button__icon-wrapper {
+    color: #000;
+}
+
+.button__icon-svg--copy {
+    position: absolute;
+    transform: translate(-150%, 150%);
+}
+
+.button:hover .button__icon-svg:first-child {
+    transition: transform 0.3s ease-in-out;
+    transform: translate(150%, -150%);
+}
+
+.button:hover .button__icon-svg--copy {
+    transition: transform 0.3s ease-in-out 0.1s;
+    transform: translate(0);
+}
+
+/* --- НИЖНЯЯ ГАЛЕРЕЯ (КАРУСЕЛЬ) --- */
+.bottom-gallery-section {
+    position: absolute;
+    bottom: 3%;
+    left: 3%;
+    right: 3%;
+    height: 44vh;
+    display: flex;
+    align-items: center;
+    z-index: 2;
+    transition: all 0.5s ease-in-out;
+}
+
+.gallery-track-container {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    padding: 10px 0;
+    scroll-behavior: smooth;
+    display: flex;
+    align-items: center;
+}
+
+.gallery-track {
+    display: flex;
+    gap: 1.5vw;
+    width: max-content;
+    transition: transform 0.3s ease;
+    align-items: center;
+}
+
+.bottom-gallery-section .card {
+    width: 17vw;
+    min-width: 160px;
+    max-width: 220px;
+    height: 40vh;
+    min-height: 220px;
+    background: rgba(217, 217, 217, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 12px 17px 51px rgba(0, 0, 0, 0.22);
+    backdrop-filter: blur(6px);
+    border-radius: 17px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.5s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+    color: white;
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.card-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+    transition: transform 0.5s;
+}
+
+.card-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 2;
+    font-size: 16px;
+    letter-spacing: 1px;
+}
+
+.bottom-gallery-section .card:hover .card-overlay {
+    opacity: 1;
+}
+
+.bottom-gallery-section .card:hover .card-img {
+    transform: scale(1.08);
+}
+
+.bottom-gallery-section .card:hover {
+    border: 1px solid rgb(7, 185, 255);
+    transform: scale(1.03);
+    box-shadow: 0 0 20px rgba(7, 185, 255, 0.4);
+}
+
+.scroll-btn {
+    background: rgba(27, 39, 53, 0.8);
+    border: 1px solid rgba(7, 185, 255, 0.6);
+    color: white;
+    font-size: 24px;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+    z-index: 5;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+.scroll-btn:hover {
+    background: rgba(7, 185, 255, 0.3);
+    border-color: rgb(7, 185, 255);
+    box-shadow: 0 0 15px rgba(7, 185, 255, 0.6);
+}
+
+.left-btn { margin-right: 15px; }
+.right-btn { margin-left: 15px; }
+
+/* --- ИНТЕРАКТИВНОЕ РАЗДЕЛЕНИЕ ЭКРАНА --- */
+.active-view-container {
+    position: absolute;
+    top: 5%;
+    left: 4%;
+    width: 42vw;
+    height: 90vh;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.5s ease-in-out;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.big-preview-box {
+    position: relative;
+    max-width: 100%;
+    max-height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+.big-preview-box img {
+    max-width: 100%;
+    max-height: 80vh;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    border-radius: 15px;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.6);
+}
+
+.close-view-btn {
+    position: relative;
+    background: rgba(27, 39, 53, 0.9);
+    border: 1px solid rgba(7, 185, 255, 0.8);
+    color: white;
+    padding: 8px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.3s;
+    z-index: 15;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+.close-view-btn:hover {
+    background: rgba(7, 185, 255, 0.4);
+    box-shadow: 0 0 15px rgba(7, 185, 255, 0.6);
+}
+
+/* --- РЕЖИМ РАЗДЕЛЕННОГО ЭКРАНА --- */
+.container.split-mode .top-section .parent {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: scale(0.95);
+    transition: all 0.5s ease-in-out;
+}
+
+.container.split-mode .bottom-gallery-section {
+    left: 48%;
+    right: 4%;
+    bottom: 5%;
+    height: 42vh;
+}
+
+.container.split-mode .bottom-gallery-section .card {
+    width: 110px;
+    height: 34vh;
+}
+
+.container.split-mode .active-view-container {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* --- МОБИЛЬНАЯ АДАПТАЦИЯ (Экраны до 768px) --- */
+@media (max-width: 768px) {
+    html, body {
+        overflow-y: auto;
+        overflow-x: hidden;
+        height: auto;
+        min-height: 100vh;
+    }
+
+    canvas {
+        position: fixed !important;
+        z-index: -1;
+    }
+
+    .container {
+        display: flex;
+        flex-direction: column;
+        height: auto;
+        min-height: 100vh;
+        overflow: visible;
+    }
+
+    .top-section {
+        position: static;
+        transform: none;
+        display: contents;
+    }
+
+    /* 1. ГЛАВНАЯ КАРТОЧКА: Половина экрана */
+    .parent {
+        order: 1;
+        width: 100vw;
+        height: 50vh;
+        min-width: 0;
+        min-height: 0;
+        padding: 15px;
+        box-sizing: border-box;
+    }
+
+    /* 2. ГАЛЕРЕЯ: Вторая половина экрана */
+    .bottom-gallery-section {
+        order: 2;
+        position: relative;
+        bottom: auto; left: auto; right: auto;
+        height: 50vh;
+        width: 100vw;
+        padding: 0 10px;
+        box-sizing: border-box;
+    }
+
+    .bottom-gallery-section .card {
+        width: 45vw;
+        height: 38vh;
+        min-width: 140px;
+    }
+
+    .scroll-btn {
+        display: none;
+    }
+    .gallery-track-container {
+        overflow-x: auto;
+        padding: 10px 15px;
+    }
+
+    /* 3. ПРОКРУТКА ВНИЗ (Прайс и Соцсети) */
+    .right-panel {
+        order: 3;
+        width: 100vw;
+        height: auto;
+        min-height: 50vh;
+        padding: 20px 15px 40px 15px;
+        margin-top: 0;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: row;
+        align-items: stretch;
+    }
+
+    .price-card {
+        width: 50% !important;
+        height: auto !important;
+        min-height: 250px;
+    }
+
+    .right-column {
+        width: 50%;
+        padding-left: 15px;
+        justify-content: center;
+        gap: 20px;
+    }
+
+    /* Кубик 2x2 для соцсетей */
+    .example-2 {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+        gap: 12px;
+    }
+
+    .icon-content {
+        max-width: 100%;
+    }
+
+    /* Отключаем подсказки (tooltips) для мобильных */
+    .icon-content .tooltip {
+        display: none !important;
+    }
+
+    .button {
+        padding: 1.2rem 1.5rem;
+        font-size: 16px;
+    }
+
+    .active-view-container {
+        position: fixed;
+        top: 5%;
+        left: 5%;
+        width: 90vw;
+        height: 90vh;
+        z-index: 999;
+    }
+
+    .container.split-mode .top-section .parent,
+    .container.split-mode .bottom-gallery-section,
+    .container.split-mode .right-panel {
+        opacity: 0.2;
+        pointer-events: none;
+    }
+
+    .container.split-mode .bottom-gallery-section {
+        left: 0; right: 0; bottom: auto; height: 50vh;
+    }
+}

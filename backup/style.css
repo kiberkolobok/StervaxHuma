@@ -1,0 +1,258 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+}
+
+.container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    z-index: 1;
+}
+
+/* Верхняя панель */
+.top-section {
+    position: absolute;
+    top: 25%;
+    left: 5%;
+    right: 5%;
+    transform: translateY(-50%);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 2;
+}
+
+/* Стили карточки */
+.parent {
+    width: 42vw;
+    height: 35vh;
+    min-width: 380px;
+    min-height: 280px;
+    padding: 20px;
+    perspective: 1000px;
+}
+
+.card {
+    width: 100%;
+    height: 100%;
+    border-radius: 30px;
+    border: 2px solid rgba(7, 185, 255, 0.4);
+    transform-style: preserve-3d;
+    background: linear-gradient(135deg, rgba(27, 39, 53, 0.9) 0%, rgba(10, 14, 23, 0.95) 100%);
+    transition: all 0.5s ease-in-out;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.card:hover {
+    border-color: rgb(7, 185, 255);
+    box-shadow: 0 0 25px rgba(7, 185, 255, 0.25);
+    transform: rotate3d(0.5, 1, 0, 20deg);
+}
+
+.content-box {
+    background: rgba(13, 22, 38, 0.75);
+    width: 100%;
+    height: 100%;
+    border-radius: 28px;
+    transition: all 0.5s ease-in-out;
+    padding: 12% 12%;
+    box-sizing: border-box;
+    transform-style: preserve-3d;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.content-box .card-title {
+    display: inline-block;
+    color: #ffffff;
+    font-size: 34px;
+    font-weight: 900;
+    text-shadow: 0 0 10px rgba(7, 185, 255, 0.5);
+    transition: all 0.5s ease-in-out;
+    transform: translate3d(0px, 0px, 50px);
+}
+
+.content-box .card-title:hover {
+    transform: translate3d(0px, 0px, 60px);
+}
+
+.content-box .card-content {
+    margin-top: 15px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #b0c4de;
+    line-height: 1.4;
+    transition: all 0.5s ease-in-out;
+    transform: translate3d(0px, 0px, 30px);
+}
+
+.content-box .card-content:hover {
+    transform: translate3d(0px, 0px, 60px);
+}
+
+/* --- ИКОНКИ СОЦСЕТЕЙ --- */
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.example-2 {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 15px;
+    /* Увеличенный отступ справа, чтобы сдвинуть иконки правее */
+    margin-right: 0%;
+}
+
+.icon-content {
+    position: relative;
+}
+
+/* Подсказка (tooltip) теперь появляется СНИЗУ */
+.icon-content .tooltip {
+    position: absolute;
+    bottom: -38px; /* Вынесено под иконку */
+    left: 50%;
+    transform: translateX(-50%);
+    color: #fff;
+    padding: 4px 8px;
+    border-radius: 10px;
+    opacity: 0;
+    visibility: hidden;
+    font-size: 11px;
+    font-family: sans-serif;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    z-index: 10;
+}
+
+.icon-content:hover .tooltip {
+    opacity: 1;
+    visibility: visible;
+    bottom: -44px; /* Плавное смещение вниз при наведении */
+}
+
+.icon-content a {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 20%;
+    color: #fff;
+    text-decoration: none;
+    background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.12),
+        rgba(255, 255, 255, 0.03)
+    );
+    backdrop-filter: blur(14px) saturate(180%);
+    -webkit-backdrop-filter: blur(14px) saturate(180%);
+    transition: all 0.35s ease-in-out;
+    box-shadow:
+        inset 0 1px 2px rgba(255, 255, 255, 0.3),
+        inset 0 -2px 6px rgba(0, 0, 0, 0.25),
+        0 6px 16px rgba(0, 0, 0, 0.3);
+}
+
+/* Рамки иконок */
+.icon-content[data-social="discord"] a { border: 1px solid rgba(114, 137, 218, 0.6); }
+.icon-content[data-social="deviantart"] a { border: 1px solid rgba(5, 204, 148, 0.6); }
+.icon-content[data-social="telegram"] a { border: 1px solid rgba(0, 136, 204, 0.6); }
+
+.icon-content a::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        120deg,
+        rgba(255, 255, 255, 0) 30%,
+        rgba(255, 255, 255, 0.3) 50%,
+        rgba(255, 255, 255, 0) 70%
+    );
+    transform: rotate(25deg) translateX(-100%);
+    transition: transform 0.8s ease;
+    z-index: 0;
+}
+
+.icon-content a:hover::before {
+    transform: rotate(25deg) translateX(100%);
+}
+
+.icon-content a svg {
+    position: relative;
+    z-index: 1;
+    width: 24px;
+    height: 24px;
+}
+
+.icon-content a:hover {
+    color: white;
+    box-shadow: 0 0 20px rgba(7, 185, 255, 0.4);
+}
+
+.icon-content a .filled {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    transition: all 0.3s ease-in-out;
+    border-radius: 20%;
+}
+
+@keyframes premiumGradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Градиенты подсказок и заливки при наведении */
+.icon-content[data-social="discord"] .filled,
+.icon-content[data-social="discord"] ~ .tooltip {
+    background: linear-gradient(135deg, #1e2548, #36448c, #5865F2, #181c38);
+    background-size: 400% 400%;
+    animation: premiumGradient 6s ease infinite;
+    border: 1px solid rgba(88, 101, 242, 0.6);
+}
+
+.icon-content[data-social="deviantart"] .filled,
+.icon-content[data-social="deviantart"] ~ .tooltip {
+    background: linear-gradient(135deg, #0b3d32, #0e6652, #05cc94, #082b23);
+    background-size: 400% 400%;
+    animation: premiumGradient 6s ease infinite;
+    border: 1px solid rgba(5, 204, 148, 0.6);
+}
+
+.icon-content[data-social="telegram"] .filled,
+.icon-content[data-social="telegram"] ~ .tooltip {
+    background: linear-gradient(135deg, #0a1f2d, #0f4a66, #0088cc, #0a2e44);
+    background-size: 400% 400%;
+    animation: premiumGradient 6s ease infinite;
+    border: 1px solid rgba(0, 136, 204, 0.6);
+}
